@@ -3,7 +3,9 @@ package com.navershop.www;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,11 +16,54 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 public class web_Controller {
 	
 	PrintWriter pw = null;
+	
+	
+	
+	
+	
+	@GetMapping("/restapi.do")
+	//@SessionAttribute: session이 이미 등록되어있는 상황일 경우 해당 정보를 가져올 수 있음
+	public String restapi(@SessionAttribute(name="mid", required = false) String mid) throws Exception  {
+		System.out.println(mid);
+		if(mid==null) {
+			System.out.println("로그인 후 결제내역을 확인하실 수 있습니다.");
+		}
+		else {
+			System.out.println("결제내역은 다음과 같습니다.");
+		}
+		return null;
+	}
+	
+	
+	//HttpSession : interface를 활용하여, 세션을 빠르게 구현하는 방식 스타일
+	@PostMapping("/loginok.do")
+	public String loginok(@RequestParam(value="", required = false) String mid, HttpSession session) {
+		if(mid != null || mid != "") {
+		session.setAttribute("mid", mid);
+		session.setMaxInactiveInterval(1800);
+		}
+		return null;
+	}
+	
+	
+	
+	/*
+	@PostMapping("/loginok.do")
+	public String loginok(String mid, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		session.setAttribute("mid", mid);
+		session.setMaxInactiveInterval(1800 );
+		System.out.println(mid);
+		return null;
+	}
+	*/
+	
 	
 	
 	@PostMapping("/ajaxok3.do")
@@ -28,20 +73,15 @@ public class web_Controller {
 		JSONArray ja = new JSONArray(arr);
 		//System.out.println(ja);
 		//System.out.println(ja.get(1));
-		System.out.println(ja.length());
-		JSONArray ja2 = (JSONArray)ja.get(1);
-		System.out.println(ja2.get(0));
-		System.out.println(ja2.get(1));
-		System.out.println(ja2.get(2));
-		/*
+		//System.out.println(ja.length());
+		
 		int f,ff;
 		for(f=0; f<ja.length(); f++) {
-			for(ff=0; ff<)
-		}
-		*/
-		
-
-		
+			JSONArray ja2 = (JSONArray)ja.get(f);
+			for(ff=0; ff<ja2.length(); ff++) {
+				System.out.println(ja2.get(ff));
+			}
+		}	
 		this.pw = res.getWriter();
 		this.pw.print("ok");
 		this.pw.close();
@@ -77,13 +117,7 @@ public class web_Controller {
 
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	
 	//@RequestBody : GET/POST(X) JSON기반일 경우. (주로 post)
 	//@ResponseBody : 미디어타입, 파라미터타입 (단, 인자값에 선언하지 않음)
