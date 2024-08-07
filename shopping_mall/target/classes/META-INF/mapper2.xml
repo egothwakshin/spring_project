@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop_source">
 
+
+<select id="gmember_select" resultType="gmember_dao">
+select * from general_member order by gidx desc
+</select>
+
+<insert id="gmember_insert">
+insert into general_member values ('0',#{gid},#{gpw},#{gname},#{gemail},#{ghp},#{gemail_ok},#{gsms_ok},now())
+</insert>
+
+<select id="duplicate_pd" resultType="int">
+select count(*) from product_registration where product_code=#{product_code}
+</select>
+
+
 <select id="category_select" resultType="category_dao">
 select * from category order by cidx desc
 </select>

@@ -15,7 +15,7 @@
     <div class="nav_div">
         <ol>
             <li title="쇼핑몰 상품관리" id="adminList" onclick="go_adminlist('<%=mid%>')">쇼핑몰 관리자 리스트</li>
-            <li title="쇼핑몰 회원관리" onclick="">쇼핑몰 회원관리</li>
+            <li title="쇼핑몰 회원관리" onclick="go_gmemberlist('<%=mid%>')">쇼핑몰 회원관리</li>
             <li title="쇼핑몰 상품관리" onclick="go_productlist('<%=mid%>')">쇼핑몰 상품관리</li>
             <li title="쇼핑몰 기본설정" onclick="go_siteinfo('<%=mid%>')">쇼핑몰 기본설정</li>
             <li title="쇼핑몰 공지사항" onclick="">쇼핑몰 공지사항</li>
@@ -51,6 +51,14 @@ function go_productlist(id){
 		alert('접근권한이 없습니다.');		
 	}else{
 		location.href = "./product_select.do";
+	}
+}
+
+function go_gmemberlist(id){
+	if(id=="null" || id==null || id==""){
+		alert('접근권한이 없습니다.');		
+	}else{
+		location.href = "./shop_member_list.do";
 	}
 }
 

@@ -2,6 +2,8 @@
 <%@page import="java.util.Random"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="cr" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>     
 <%
 	Random rd = new Random();
 	
@@ -22,6 +24,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상품등록 페이지</title>
+    <script src="./js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/basic.css">
     <link rel="stylesheet" type="text/css" href="./css/login.css?v=1">
     <link rel="stylesheet" type="text/css" href="./css/main.css">
@@ -41,16 +44,21 @@
     <ul>
         <li>대메뉴 카테고리</li>
         <li>
+        
             <select class="product_input1" name="category_pd">
-                <option value="카테고리 test">카테고리 test</option>
-            </select><input type="button" value="카테고리 등록" title="카테고리 등록" class="product_btn" onclick="go_ct_list()"> <span class="help_text">※ 해당 카테고리가 없을 경우 신규 등록하시길 바랍니다.</span>
+            	<option value="NO">카테고리 선택</option>
+            	<cr:forEach var="ct_data" items="${ct_data}">
+                <option value="${ct_data.main_menu_name}">${ct_data.main_menu_name}</option>
+                </cr:forEach>
+            </select>
+            <input type="button" value="카테고리 등록" title="카테고리 등록" class="product_btn" onclick="go_ct_list()"> <span class="help_text">※ 해당 카테고리가 없을 경우 신규 등록하시길 바랍니다.</span>
         </li>
     </ul>
     <ul>
         <li>상품코드</li>
         <li>
-            <input type="text" class="product_input1" name="product_code" value="<%=pgcode%>"> 
-            <input type="button" value="중복확인" title="중복확인" class="product_btn"> <span class="help_text">※ 상품코드는 절대 중복되지 않도록 합니다.</span>
+            <input type="text" class="product_input1" name="product_code" id="pd_code" value="<%=pgcode%>"> 
+            <input type="button" value="중복확인" title="중복확인" class="product_btn" id="btn"> <span class="help_text">※ 상품코드는 절대 중복되지 않도록 합니다.</span>
         </li>
     </ul>
     <ul>
@@ -152,6 +160,41 @@
 </footer>
 </body>
 <script>
+$(function(){
+	$("#btn").click(function(){
+		
+		var pd_code = $('#pd_code').val();
+
+		$.ajax({
+			url: './duplicate_pd.do',
+			type: 'post',
+			data: {pd_code: pd_code},
+			success: function($response){
+				console.log($response);
+				if($response=="duplicated"){
+					alert('중복되는 상품코드입니다.');
+				}else{
+					alert('사용가능한 상품코드입니다.');
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+			
+			
+			
+			
+			
+			
+		});		
+	});
+});
+
+
+
+
+
+
 function go_ct_list(){
 	location.href = "./cate_list.do";
 }
@@ -159,6 +202,9 @@ function go_pd_list(){
 	location.href = "./product_list.jsp";
 }
 function go_pd_regist(){
+	var aa = frm.category_pd.value;
+	console.log(aa);
+	
 	frm.method = "post";
 	frm.action = "./product_regist.do";
 	frm.submit();	

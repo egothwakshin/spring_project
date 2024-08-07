@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="cr" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -45,19 +47,27 @@
         <li>사용 유/무</li>
         <li>관리</li>
     </ul>
-    <ul>
-        <li><input type="checkbox"></li>
-        <li style="text-align: left; text-indent: 5px;">분류코드</li>
-        <li>대메뉴 코드</li>
-        <li style="text-align: left; text-indent: 5px;">대메뉴명</li>
-        <li>-</li>
-        <li style="text-align: left; text-indent: 5px;">-</li>
-        <li>Y</li>
-        <li>[수정]</li>
-    </ul>
+    <cr:choose>
+    <cr:when test="${empty ct_data}">
     <ul>
         <li style="width: 100%;">등록된 카테고리가 없습니다.</li>
     </ul>
+	</cr:when>
+	<cr:otherwise>
+	<cr:forEach var="ct_data" items="${ct_data}">
+    <ul>
+        <li><input type="checkbox"></li>
+        <li style="text-align: left; text-indent: 5px;">${ct_data.category_code}</li>
+        <li>${ct_data.main_menu_code}</li>
+        <li style="text-align: left; text-indent: 5px;">${ct_data.main_menu_name}</li>
+        <li>-</li>
+        <li style="text-align: left; text-indent: 5px;">-</li>
+        <li>${ct_data.category_use}</li>
+        <li>[수정]</li>
+    </ul>
+    </cr:forEach>
+    </cr:otherwise>
+    </cr:choose>
 </div>
 <div class="subpage_view3">
     <ul class="pageing">

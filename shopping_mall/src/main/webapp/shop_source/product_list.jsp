@@ -52,9 +52,13 @@
         <li>품절</li>
         <li>관리</li>
     </ul>
+   <cr:choose>
+    <cr:when test="${empty pd_data}">
     <ul>
         <li style="width: 100%;">등록된 상품이 없습니다.</li>
     </ul>
+    </cr:when>
+    <cr:otherwise>
     	<cr:forEach var="pd_data" items="${pd_data}" >
     <ul>
         <li><input type="checkbox"></li>
@@ -70,7 +74,9 @@
         <li>${pd_data.early_end}</li>
         <li>관리</li>
     </ul>
-   	 </cr:forEach>
+   		</cr:forEach>
+   	 </cr:otherwise>
+   	</cr:choose>  
 </div>
 <div class="subpage_view3">
     <ul class="pageing">
@@ -98,7 +104,7 @@
 </body>
 <script>
 function go_pd_write(){
-	location.href = "./product_write.jsp";
+	location.href = "./product_write.do";
 }
 function go_ct_list(){
 	location.href = "./cate_list.jsp";

@@ -25,6 +25,23 @@ public class admin_controller {
 	@Resource(name = "addmaster")
 	private addmaster_module am;
 	
+	//일반회원관리
+	@GetMapping("/shop_source/shop_member_list.do")
+	public String gm_list(Model m, gmember_dao dao) throws Exception{
+		List<gmember_dao> gm = am.gm_selectList(dao);
+		m.addAttribute("gm", gm);
+		
+		return "/shop_source/shop_member_list";
+	}
+	
+	//상품등록 페이지에 '카테고리 품목' 보내기
+	@GetMapping("/shop_source/product_write.do")
+	public String pd_write(Model m, category_dao dao) throws Exception{
+		List<category_dao> ct_data = am.category_selectList(dao);
+		m.addAttribute("ct_data", ct_data);
+		
+		return "/shop_source/product_write";
+	}
 	
 	//카테고리 리스트 출력
 	@GetMapping("/shop_source/cate_list.do")
@@ -32,6 +49,7 @@ public class admin_controller {
 		List<category_dao> ct_data = am.category_selectList(dao);
 		m.addAttribute("ct_data", ct_data);
 		return "/shop_source/cate_list";
+
 	}
 	
 	//카테고리 등록
@@ -129,7 +147,23 @@ public class admin_controller {
 		session.invalidate();
 		return "/shop_source/index";
 	}
-	
+		
+	//상품 중복 체크
+	@PostMapping("/shop_source/duplicate_pd.do")
+	public String duplicate_pd(String pd_code, HttpServletResponse res) throws Exception{
+		String str = "";
+		int result = am.duplicate_pdselect(pd_code);
+		this.pw = res.getWriter();
+		if(result>0) {
+			str="duplicated";
+		}
+		else {
+			str="ok";
+		}
+		this.pw.print(str);
+		this.pw.close();
+		return null;
+	}
 	
 	//아이디 중복체크
 	@PostMapping("/shop_source/duplicate_id.do")

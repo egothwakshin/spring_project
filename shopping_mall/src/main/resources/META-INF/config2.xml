@@ -8,5 +8,6 @@
 		<typeAlias alias="sitesettings_dao" type="shopping.sitesettings_dao"/>
 		<typeAlias alias="product_dao" type="shopping.product_dao"/>
 		<typeAlias alias="category_dao" type="shopping.category_dao"/>
+		<typeAlias alias="gmember_dao" type="shopping.gmember_dao"/>
 	</typeAliases>
   </configuration>

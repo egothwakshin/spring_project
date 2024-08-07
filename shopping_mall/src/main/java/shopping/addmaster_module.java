@@ -17,6 +17,14 @@ public class addmaster_module {
 	@Resource(name = "template2")
 	private SqlSessionTemplate tm2;
 	
+	//일반회원리스트 출력
+	public List<gmember_dao> gm_selectList(gmember_dao dao){
+		List<gmember_dao> gm = tm2.selectList("shop_source.gmember_select",dao);		
+		return gm;
+	}
+	
+	//일반회원 가입
+	
 	//카테고리 출력
 	public List<category_dao> category_selectList(category_dao dao){
 		List<category_dao> lc = tm2.selectList("shop_source.category_select",dao);
@@ -150,6 +158,12 @@ public class addmaster_module {
 		}		
 		int result = tm2.insert("shop_source.insert_master", dao);
 		return result;				
+	}
+	
+	//상품코드 중복체크
+	public int duplicate_pdselect(String pd_code) {
+		int result = tm2.selectOne("shop_source.duplicate_pd", pd_code);
+		return result;
 	}
 	
 	//아이디 중복체크
