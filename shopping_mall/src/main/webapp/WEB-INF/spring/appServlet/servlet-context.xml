@@ -17,15 +17,23 @@
 	<resources location="/js/" mapping="/js/**"/>
 	<resources location="/css/" mapping="/css/**"/>
 	<resources location="/images/" mapping="/images/**"/>
+	<resources location="/shop_source/" mapping="/shop_source/**"/>
+	<resources location="/pay/" mapping="/pay/**"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<!--  <beans:property name="prefix" value="/WEB-INF/views/" />--> 
+		<beans:property name="prefix" value="/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.navershop.www" />
+	<context:component-scan base-package="com.navershop.www,shopping,pay" />
 	
-	
+	<!-- File -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<beans:property name="defaultEncoding" value="utf-8"/>
+	<beans:property name="maxUploadSize" value="3145728"/>
+	<beans:property name="maxInMemorySize" value="2097152"/>
+	</beans:bean>
 	
 </beans:beans>

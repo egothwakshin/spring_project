@@ -8,6 +8,31 @@ var basket = [
 
 $(function(){
 	
+	
+	$("#btn4").click(function(){
+			$.ajax({
+			url: "./ajaxok4.do",
+			type: "post",
+			cache: false,
+			dataType: "text",
+			contentType:"application/json",
+			data: JSON.stringify(basket),
+			success:function($result){
+				console.log($result);
+			},
+			error:function(){
+				console.log("error!!");
+			}				
+		});
+		
+		
+	});
+	
+	
+	
+	
+	
+	
 	//Front 배열값 응용편
 	
 	$("#btn3").click(function(){
