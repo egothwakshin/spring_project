@@ -1,5 +1,6 @@
 package shopping;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,9 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Repository("addmaster")
 public class addmaster_module {
@@ -17,13 +21,30 @@ public class addmaster_module {
 	@Resource(name = "template2")
 	private SqlSessionTemplate tm2;
 	
+	
+	public String file_insert(
+			product_dao dao,
+			MultipartFile files,
+			HttpServletRequest req) throws Exception {
+		
+		String url = req.getServletContext().getRealPath("/project0729/");
+		System.out.println(url);
+		
+		String mfile = files.getOriginalFilename();
+		FileCopyUtils.copy(mfile.getBytes(), new File(url+mfile));
+		
+		return null;
+	}
+	
+	
+	
+	
 	//일반회원리스트 출력
-	public List<gmember_dao> gm_selectList(gmember_dao dao){
-		List<gmember_dao> gm = tm2.selectList("shop_source.gmember_select",dao);		
+	public List<gmember_dao> gm_selectList(){
+		List<gmember_dao> gm = tm2.selectList("shop_source.gmember_select");		
 		return gm;
 	}
 	
-	//일반회원 가입
 	
 	//카테고리 출력
 	public List<category_dao> category_selectList(category_dao dao){
@@ -90,6 +111,19 @@ public class addmaster_module {
 	//홈페이지 셋팅 (insert)
 	public int siteinfo_insert(sitesettings_dao dao) throws Exception {
 		int result = tm2.insert("shop_source.siteinfo_insert", dao);
+		return result;
+	}
+	
+	
+	
+	//일반회원 정지상태 업데이트
+	public int update_gstop(int gidx, String gstop) {
+		
+		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("gidx", gidx);
+		mp.put("gstop", gstop);
+		int result = this.tm2.update("shop_source.gm_stop", mp);
+		
 		return result;
 	}
 	

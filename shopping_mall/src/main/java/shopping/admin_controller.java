@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class admin_controller {
@@ -25,10 +26,15 @@ public class admin_controller {
 	@Resource(name = "addmaster")
 	private addmaster_module am;
 	
+	
+
+	
+
+	
 	//일반회원관리
 	@GetMapping("/shop_source/shop_member_list.do")
 	public String gm_list(Model m, gmember_dao dao) throws Exception{
-		List<gmember_dao> gm = am.gm_selectList(dao);
+		List<gmember_dao> gm = am.gm_selectList();
 		m.addAttribute("gm", gm);
 		
 		return "/shop_source/shop_member_list";
@@ -124,12 +130,28 @@ public class admin_controller {
 		return null;
 	}
 	
+	
+	
+	//일반회원 정지상태 여부
+	@GetMapping("/shop_source/gmember_stop.do")
+	public String gm_stop(Model m, int gidx, String gstop) throws Exception{
+		
+		int result = am.update_gstop(gidx,gstop);
+		System.out.println(result);
+		if(result>0) {
+			List<gmember_dao> gm = am.gm_selectList();
+			m.addAttribute("gm", gm);
+			return "/shop_source/shop_member_list";
+		}
+		return null;
+	}
+	
+	
 	//관리자 승인,미승인 여부
 	@GetMapping("/shop_source/admin_approve.do")
-	public String admin_approve(Model m,int aidx,String approve,HttpServletResponse res) throws Exception {
+	public String admin_approve(Model m,int aidx,String approve) throws Exception {
 		
 		int result = am.update_approve(aidx,approve);	
-		
 		if(result>0) {
 			List<addmaster_dao> adminlist = am.master_select();
 			m.addAttribute("adminlist", adminlist);

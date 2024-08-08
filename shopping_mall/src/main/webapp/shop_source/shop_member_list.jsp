@@ -41,20 +41,26 @@
 		    </ol>
 	    </cr:when>
     <cr:otherwise>
-    	<cr:forEach var="gm" items="${gm }" varStatus="status">
+    <cr:set var="gm_size" value="${fn:length(gm)}"/>
+    <cr:forEach var="gm" items="${gm}" varStatus="status">
 		    <ol class="new_admin_lists">
-		        <li>${gm.gidx}</li>
+		        <li>${gm_size - status.index}</li>
 		        <li>${gm.gname}</li>
 		        <li>${gm.gid}</li>
 		        <li>${gm.ghp}</li>
 		        <li>${gm.gemail}</li>
 		        <li>${gm.gemail_ok}</li>
 		        <li>${gm.gsms_ok}</li>
-		        <li>${gm.gdate}</li>
-		        <li>정상</li>
+		        <li>${fn:substring(gm.gdate, 0, 10)}</li>
 		        <li>
-		            <input type="button" value="정지" class="new_addbtn1" title="정지">
-		            <input type="button" value="해제" class="new_addbtn2" title="해제">
+           	  	<cr:choose>
+                <cr:when test="${gm.gstop == 'Y'}">휴면</cr:when>
+                <cr:otherwise>정상</cr:otherwise>
+            	</cr:choose>
+        		</li>
+		        <li>
+		            <input type="button" value="정지" class="new_addbtn1" title="정지" onclick="gstop_ok('${gm.gidx}','${gm.gstop}')">
+		            <input type="button" value="해제" class="new_addbtn2" title="해제" onclick="gstop_no('${gm.gidx}','${gm.gstop}')">
 		        </li>
 		    </ol>
 	    </cr:forEach>
@@ -78,4 +84,31 @@
     </div>
 </footer>
 </body>
+<script>
+function gstop_ok(gidx,gstop){
+	
+	if(gstop=='N'){
+		if(confirm('해당 계정을 휴면계정으로 전환하시겠습니까?')){
+			location.href = "./gmember_stop.do?gidx="+gidx+"&gstop="+gstop;
+		}
+	}
+	else{
+		alert('해당 계정은 이미 정지된 상태입니다');
+	}
+}
+
+function gstop_no(gidx,gstop){
+	
+	if(gstop=='Y'){
+		if(confirm('해당 계정을 휴면 해제하시겠습니까?')){
+			location.href = "./gmember_stop.do?gidx="+gidx+"&gstop="+gstop;
+		}
+	}
+	else{
+		alert('해당 계정은 이미 휴면 해제된 상태입니다.');
+	}
+	
+}
+
+</script>
 </html>

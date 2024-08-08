@@ -95,7 +95,6 @@
 <script>
 function approve(aidx,approve){
 	
-	console.log(approve)
 	if(approve=='N'){
 		if(confirm('관리자 승인을 진행 하시겠습니까?')){
 			location.href = "./admin_approve.do?aidx="+aidx+"&approve="+approve;

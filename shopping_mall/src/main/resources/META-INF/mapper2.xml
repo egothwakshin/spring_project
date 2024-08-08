@@ -8,7 +8,7 @@ select * from general_member order by gidx desc
 </select>
 
 <insert id="gmember_insert">
-insert into general_member values ('0',#{gid},#{gpw},#{gname},#{gemail},#{ghp},#{gemail_ok},#{gsms_ok},now())
+insert into general_member values ('0',#{gid},#{gpw},#{gname},#{gemail},#{ghp},#{gemail_ok},#{gsms_ok},#{gstop},now())
 </insert>
 
 <select id="duplicate_pd" resultType="int">
@@ -53,22 +53,32 @@ values ('0',#{homepage_title},#{admin_email},#{point_use},#{initial_point},
 #{max_payment_point},#{offline_payment_use},#{delivery_company_name},#{delivery_cost},#{desired_delivery_date_use})
 </insert>
 
-<!--관리자 (admin)-->
+<!--관리자 승인 여부 (admin)-->
 <update id="update_approve" parameterType="map">
 update add_master set ad_approve=
 <choose>
-	<when test='approve=="N"'>
-		'Y'
-	</when>
-	<when test='approve=="Y"'>
-		'N'
-	</when>
-	<otherwise>
-     	ad_approve
-    </otherwise>
+	<when test='approve=="N"'>'Y'</when>
+	<when test='approve=="Y"'>'N'</when>
+	<otherwise>ad_approve</otherwise>
 </choose>
 where aidx=#{adix}
 </update>
+
+<!-- 일반회원 정지 여부 -->
+<update id="gm_stop" parameterType="map">
+update general_member set gstop=
+<choose>
+	<when test='gstop=="N"'>'Y'</when>	
+	<when test='gstop=="Y"'>'N'</when>
+	<otherwise>gstop</otherwise>	
+</choose>
+where gidx=#{gidx}
+</update>
+
+
+
+
+
 
 <select id="search_ad" resultType="addmaster_dao">
 select * from add_master where ad_id=#{ad_id} and ad_pw=#{ad_pw}

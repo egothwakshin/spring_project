@@ -8,5 +8,5 @@ import lombok.Setter;
 public class gmember_dao {
 	int gidx;
 	
-	String gid,gpw,gname,gemail,ghp,gemail_ok,gsms_ok,gdate;
+	String gid,gpw,gname,gemail,ghp,gemail_ok,gsms_ok,gstop,gdate;
 }
