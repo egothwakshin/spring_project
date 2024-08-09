@@ -38,7 +38,7 @@
 <%@ include file="./top.jsp" %>
 <main class="maincss">
 <section>
-<form id="frm">
+<form id="frm" enctype="multipart/form-data">
 <p>상품 등록 페이지</p>
 <div class="product_insert">
     <ul>
@@ -124,15 +124,15 @@
         <li>
             <ol style="width:100%; height: auto;">
             <li style="width:100%; height:45px;">
-            <input type="file" name="main_image">
+            <input type="file" name="pd_image">
             <span class="help_text">※ 상품 대표이미지 이며, 이미지 용량은 2MB 까지 입니다.</span>
             </li>
             <li style="height:45px;">
-            <input type="file" name="additional_image1">
+            <input type="file" name="pd_image">
             <span class="help_text">※ 추가 이미지 이며, 이미지 용량은 2MB 까지 입니다.</span>
             </li>
             <li style="height:45px;">
-            <input type="file" name="additional_image2">
+            <input type="file" name="pd_image">
             <span class="help_text">※ 추가 이미지 이며, 이미지 용량은 2MB 까지 입니다.</span>
             </li>
             </ol>
@@ -179,21 +179,10 @@ $(function(){
 			},
 			error: function(error){
 				console.log(error);
-			}
-			
-			
-			
-			
-			
-			
+			}		
 		});		
 	});
 });
-
-
-
-
-
 
 function go_ct_list(){
 	location.href = "./cate_list.do";

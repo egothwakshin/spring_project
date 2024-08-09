@@ -63,7 +63,7 @@
     <ul>
         <li><input type="checkbox"></li>
         <li>${pd_data.product_id}</li>
-        <li>${pd_data.main_image}</li>
+        <li>${pd_data.product_image_origin}"</li>
         <li>${pd_data.product_name}</li>
         <li>${pd_data.category_pd}</li>
         <li>${pd_data.sale_price}</li>

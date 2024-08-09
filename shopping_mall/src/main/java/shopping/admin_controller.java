@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.text.Document;
 
+import org.apache.tomcat.util.log.UserDataHelper.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,9 +93,49 @@ public class admin_controller {
 	}	
 	//상품등록
 	@PostMapping("/shop_source/product_regist.do")
-	public String pd_regist(product_dao dao,HttpServletResponse res) throws Exception{
+	public String pd_regist(Model m,
+			product_dao dao,
+			MultipartFile pd_image[],
+			HttpServletRequest req,
+			HttpServletResponse res) throws Exception{
 		res.setContentType("text/html;charset=utf-8");
-		int result = am.pd_insert(dao);
+	
+		
+		try {
+			//파일 경로 배열 생성
+			String[] imagePaths = new String[3];
+			//파일 저장 및 경로 설정
+            for (int i = 0; i < pd_image.length; i++) {
+                imagePaths[i] = am.savefile(pd_image[i],req);
+            }       
+            //경로를 DAO에 설정
+            
+           dao.setProduct_image_origin(imagePaths[0]);
+           dao.setProduct_image_additional_1(imagePaths[1]);
+           dao.setProduct_image_additional_2(imagePaths[2]);	
+
+            //나머지 상품 정보와 함께 DB에 저장
+            int result = am.insertProduct(dao);
+            if(result > 0) {
+    			this.pw = res.getWriter();
+    			this.pw.print("<script>"
+    					+ "alert('정상적으로 상품 등록이 완료 되었습니다');"
+    					+ "location.href='/shop_source/product_select.do';"
+    					+ "</script>");
+    			this.pw.close();           	
+            }
+            
+            
+		}catch (Exception e) {
+			 e.printStackTrace();
+			 System.out.println("오류: " + e.getMessage());
+		}
+		
+           
+		/*
+		int result = am.pd_insert(dao, pd_image, req);
+		System.out.println(result);
+		
 		if(result>0) {
 			this.pw = res.getWriter();
 			this.pw.print("<script>"
@@ -102,7 +143,8 @@ public class admin_controller {
 					+ "location.href='/shop_source/product_select.do';"
 					+ "</script>");
 			this.pw.close();
-		}		
+		}
+		*/		
 		return null;		
 	}
 	

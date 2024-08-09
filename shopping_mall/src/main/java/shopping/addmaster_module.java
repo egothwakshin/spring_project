@@ -1,8 +1,11 @@
 package shopping;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,21 +23,6 @@ public class addmaster_module {
 	
 	@Resource(name = "template2")
 	private SqlSessionTemplate tm2;
-	
-	
-	public String file_insert(
-			product_dao dao,
-			MultipartFile files,
-			HttpServletRequest req) throws Exception {
-		
-		String url = req.getServletContext().getRealPath("/project0729/");
-		System.out.println(url);
-		
-		String mfile = files.getOriginalFilename();
-		FileCopyUtils.copy(mfile.getBytes(), new File(url+mfile));
-		
-		return null;
-	}
 	
 	
 	
@@ -64,11 +52,31 @@ public class addmaster_module {
 		return lp;
 	}
 	
-	//상품 등록
-	public int pd_insert(product_dao dao) throws Exception {
-		int result = tm2.insert("shop_source.product_insert", dao);
-		return result;
+	
+
+	
+	//파일 서버에 저장하고 경로 반환하는 메서드
+	public String savefile(MultipartFile file,HttpServletRequest req) throws Exception{
+		
+    
+        String fileName = file.getOriginalFilename();
+		//파일저장경로 설정
+		String filePath = req.getServletContext().getRealPath("/project0729/") + fileName;
+		System.out.println(filePath);
+		
+		//파일 저장
+		File dest = new File(filePath);
+		file.transferTo(dest);
+		
+		
+		return fileName;
 	}
+	
+    // 상품 정보를 DB에 insert하는 메서드
+    public int insertProduct(product_dao dao) {
+        int result = tm2.insert("shop_source.product_insert", dao);
+        return result;
+    }
 	
 	
 	
