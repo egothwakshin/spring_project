@@ -62,7 +62,7 @@ public class addmaster_module {
         String fileName = file.getOriginalFilename();
 		//파일저장경로 설정
 		String filePath = req.getServletContext().getRealPath("/project0729/") + fileName;
-		System.out.println(filePath);
+		
 		
 		//파일 저장
 		File dest = new File(filePath);

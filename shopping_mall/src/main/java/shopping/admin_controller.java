@@ -131,20 +131,7 @@ public class admin_controller {
 			 System.out.println("오류: " + e.getMessage());
 		}
 		
-           
-		/*
-		int result = am.pd_insert(dao, pd_image, req);
-		System.out.println(result);
-		
-		if(result>0) {
-			this.pw = res.getWriter();
-			this.pw.print("<script>"
-					+ "alert('정상적으로 상품 등록이 완료 되었습니다');"
-					+ "location.href='/shop_source/product_select.do';"
-					+ "</script>");
-			this.pw.close();
-		}
-		*/		
+ 	
 		return null;		
 	}
 	
