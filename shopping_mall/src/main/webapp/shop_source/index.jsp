@@ -35,7 +35,7 @@
             </span>
             <span>
                 <ol class="admin_info">
-                    <li title="신규 관리자 등록요청">신규 관리자 등록요청</li>
+                    <li title="신규 관리자 등록요청" onclick="add_master()">신규 관리자 등록요청</li>
                     <li title="아이디/패스워드 찾기">아이디/패스워드 찾기</li>
                 </ol>                
             </span>
@@ -50,14 +50,14 @@
 </form>    
 <script>
 function go_ad(){
-	
-	
-	
-	
 	frm.method="post";
-	frm.action="./admin_main.do";
+	frm.action="./shop_member_list.do";
 	return true;		
-	
+}
+function add_master(){
+	frm.method="post";
+	frm.action="./add_master.jsp";
+	frm.submit();
 }
 </script>
 </html>

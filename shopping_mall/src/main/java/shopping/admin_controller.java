@@ -2,6 +2,7 @@ package shopping;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -27,9 +29,17 @@ public class admin_controller {
 	@Resource(name = "addmaster")
 	private addmaster_module am;
 	
-	
 
-	
+	//이용약관
+	@PostMapping("/mallpage/agree.do")
+	@ResponseBody
+	public Map<String, String> terms(@RequestParam("terms")String terms) throws Exception{
+		Map<String, String> response = new HashMap<String, String>();
+		response.put("terms", terms);
+		response.put("status", "success");
+		return response;
+		
+	}
 
 	
 	//일반회원관리
@@ -260,14 +270,11 @@ public class admin_controller {
 	}
 	
 	//관리자 로그인 -> 아이디,패스워드 확인(selectOne) 후 세션만듬-> 관리자 메인페이지로 이동
-	@PostMapping("/shop_source/admin_main.do")
+	@PostMapping("/shop_source/shop_member_list.do")
 	public String admin_main(Model m, HttpServletResponse res, HttpServletRequest req,
-			addmaster_dao dao) throws Exception {
-		
+			addmaster_dao dao) throws Exception {		
 		res.setContentType("text/html;charset=utf-8");
-		ArrayList<Object> onearr = am.select_one(dao);	
-	
-		
+		ArrayList<Object> onearr = am.select_one(dao);		
 		if(onearr.get(0) == null) {
 			this.pw = res.getWriter();
 			this.pw.print("<script>"
@@ -275,13 +282,16 @@ public class admin_controller {
 					+ "location.href='./index.jsp';"
 					+ "</script>");
 			this.pw.close();
-		}
-		else {
+		}else {
 			if(onearr.get(2).equals("Y")||onearr.get(2).equals("X")) {
 				HttpSession session = req.getSession();
 				session.setAttribute("mname", onearr.get(0));
 				session.setAttribute("mid", onearr.get(1));
-				session.setMaxInactiveInterval(1800);				
+				session.setMaxInactiveInterval(1800);
+				
+				List<gmember_dao> gm = am.gm_selectList();
+				m.addAttribute("gm", gm);			
+				return "/shop_source/shop_member_list";
 			}
 			else {
 				this.pw = res.getWriter();
@@ -292,7 +302,6 @@ public class admin_controller {
 				this.pw.close();
 			}
 		}
-		
-		return "/shop_source/admin_main";
+		return null;
 	}
 }

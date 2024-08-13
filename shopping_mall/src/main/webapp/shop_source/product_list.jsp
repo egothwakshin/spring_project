@@ -63,7 +63,8 @@
     <ul>
         <li><input type="checkbox"></li>
         <li>${pd_data.product_id}</li>
-        <li><img src="../project0729/${pd_data.product_image_origin}" style="width: 30px; height: 30px;"/></li>
+        <!--  <li><img src="../project0729/${pd_data.product_image_origin}" style="width: 30px; height: 30px;"/></li>-->
+        <li><a href="../project0729/${pd_data.product_image_origin}"><img src="../project0729/${pd_data.product_image_origin}" style="width: 25px; height: 25px;"/></a></li>
         <li>${pd_data.product_name}</li>
         <li>${pd_data.category_pd}</li>
         <li>${pd_data.sale_price}</li>

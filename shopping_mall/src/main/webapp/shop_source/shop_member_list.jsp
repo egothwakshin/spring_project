@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>쇼핑몰 회원관리</title>
+    <script src="./js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/basic.css">
     <link rel="stylesheet" type="text/css" href="./css/login.css?v=1">
     <link rel="stylesheet" type="text/css" href="./css/main.css">
@@ -67,16 +68,18 @@
     </cr:otherwise>
     </cr:choose>
 </section>
+<form id="frm">
 <section style="width: 1100px; height: auto; margin: 0 auto; margin-top: 30px;">
     <p style="font-size: 15px;font-weight: bolder; margin-bottom: 10px;">■ 이용 약관</p>
-    <textarea placeholder="이용약관에 대한 내용을 입력하세요" style="width: 100%; height: 100px; resize: none;"></textarea>
-    <input type="button" value="이용약관 수정" title="이용약관 수정" class="btn_button" style="position: relative; left: 100%; margin-left: -100px;">
+    <textarea placeholder="이용약관에 대한 내용을 입력하세요" name="terms" style="width: 100%; height: 100px; resize: none;"></textarea>
+    <input type="button" onclick="go_terms()" value="이용약관 수정" title="이용약관 수정" class="btn_button" style="position: relative; left: 100%; margin-left: -100px;">
 </section>
 <section style="width: 1100px; height: auto; margin: 0 auto; margin-top: 30px;">
     <p style="font-size: 15px;font-weight: bolder; margin-bottom: 10px;">■ 개인정보 수집 및 이용</p>
-    <textarea placeholder="개인정보 수집 및 이용" style="width: 100%; height: 100px; resize: none;"></textarea>
-    <input type="button" value="개인정보 약관 수정" title="개인정보 약관 수정" class="btn_button" style="position: relative; left: 100%; margin-left: -100px;">
+    <textarea placeholder="개인정보 수집 및 이용" name="privacy_policy" style="width: 100%; height: 100px; resize: none;"></textarea>
+    <input type="button" onclick="go_privacy_policy()"  value="개인정보 약관 수정" title="개인정보 약관 수정" class="btn_button" style="position: relative; left: 100%; margin-left: -100px;">
 </section>
+</form>
 </main>
 <footer class="main_copyright">
     <div>
@@ -85,6 +88,33 @@
 </footer>
 </body>
 <script>
+function go_terms(){
+
+	
+	$.ajax({
+		type:"post",
+		url:"/mallpage/agree.do",
+		data:{terms: frm.terms.value},
+		success:function(response){
+			if(response.status=="success"){
+				$(".agreement_box").html(response.terms);
+			}else{
+				alert("이용약관 ajax 송신 오류");
+			}
+		},
+		error:function(){
+			alert("오류 발생");
+		}		
+	});
+	
+}
+function go_privacy_policy(){
+	frm.method="post";
+	frm.action= "/mallpage/agree.do";
+	frm.submit();
+}
+
+
 function gstop_ok(gidx,gstop){
 	
 	if(gstop=='N'){

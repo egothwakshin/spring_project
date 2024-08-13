@@ -75,11 +75,6 @@ update general_member set gstop=
 where gidx=#{gidx}
 </update>
 
-
-
-
-
-
 <select id="search_ad" resultType="addmaster_dao">
 select * from add_master where ad_id=#{ad_id} and ad_pw=#{ad_pw}
 </select>
