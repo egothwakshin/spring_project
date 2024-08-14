@@ -29,17 +29,32 @@ public class admin_controller {
 	@Resource(name = "addmaster")
 	private addmaster_module am;
 	
+	
+	//이용약관 다른 뷰페이지에 출력
+	@GetMapping("/mallpage/agree.do")
+	public String ct_select(Model m) throws Exception{
+		List<terms_dao> td = am.terms_select();
+		m.addAttribute("termsText", td.get(0).getT_content() );
+		return "/mallpage/agree";
 
-	//이용약관
-	@PostMapping("/mallpage/agree.do")
+	}
+	
+	
+	//이용약관 수정
+	//@PostMapping(value = "/submitTermsAjax", produces = "application/json")
+	@PostMapping("/submitTermsAjax")
 	@ResponseBody
-	public Map<String, String> terms(@RequestParam("terms")String terms) throws Exception{
+	public Map<String, String> submitTermsAjax(@RequestParam("termsText")String termsText) throws Exception{
+		
+		int result = am.terms_insert(termsText);
+
 		Map<String, String> response = new HashMap<String, String>();
-		response.put("terms", terms);
-		response.put("status", "success");
+		response.put("terms", termsText);
+		
 		return response;
 		
 	}
+	
 
 	
 	//일반회원관리
@@ -98,6 +113,7 @@ public class admin_controller {
 	public String pd_select(Model m,product_dao dao) throws Exception{
 		List<product_dao> pd_data = am.product_selectlist(dao);
 		m.addAttribute("pd_data", pd_data);
+		System.out.println(pd_data.get(0).getProduct_image_origin());
 		
 		return "/shop_source/product_list";
 	}	
@@ -109,39 +125,18 @@ public class admin_controller {
 			HttpServletRequest req,
 			HttpServletResponse res) throws Exception{
 		res.setContentType("text/html;charset=utf-8");
-	
-		
-		try {
-			//파일 경로 배열 생성
-			String[] imagePaths = new String[3];
-			//파일 저장 및 경로 설정
-            for (int i = 0; i < pd_image.length; i++) {
-                imagePaths[i] = am.savefile(pd_image[i],req);
-            }       
-            //경로를 DAO에 설정
-            
-           dao.setProduct_image_origin(imagePaths[0]);
-           dao.setProduct_image_additional_1(imagePaths[1]);
-           dao.setProduct_image_additional_2(imagePaths[2]);	
 
-            //나머지 상품 정보와 함께 DB에 저장
-            int result = am.insertProduct(dao);
-            if(result > 0) {
-    			this.pw = res.getWriter();
-    			this.pw.print("<script>"
-    					+ "alert('정상적으로 상품 등록이 완료 되었습니다');"
-    					+ "location.href='/shop_source/product_select.do';"
-    					+ "</script>");
-    			this.pw.close();           	
-            }
-            
-            
-		}catch (Exception e) {
-			 e.printStackTrace();
-			 System.out.println("오류: " + e.getMessage());
-		}
-		
- 	
+		am.handleFile(pd_image, dao, req);
+		int result = am.insertProduct(dao);
+        if(result > 0) {
+			this.pw = res.getWriter();
+			this.pw.print("<script>"
+					+ "alert('정상적으로 상품 등록이 완료 되었습니다');"
+					+ "location.href='/shop_source/product_select.do';"
+					+ "</script>");
+			this.pw.close();           	
+        }
+	
 		return null;		
 	}
 	

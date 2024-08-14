@@ -25,7 +25,17 @@ public class addmaster_module {
 	private SqlSessionTemplate tm2;
 	
 	
+	//이용약관 출력
+	public List<terms_dao> terms_select(){
+		List<terms_dao> td = tm2.selectList("shop_source.terms_select");
+		return td;
+	}
 	
+	//이용약관 수정(입력)
+	public int terms_insert(String content) {
+		int result = tm2.insert("shop_source.terms_insert", content);
+		return result;
+	}
 	
 	//일반회원리스트 출력
 	public List<gmember_dao> gm_selectList(){
@@ -53,23 +63,58 @@ public class addmaster_module {
 	}
 	
 	
-
 	
-	//파일 서버에 저장하고 경로 반환하는 메서드
-	public String savefile(MultipartFile file,HttpServletRequest req) throws Exception{
+	//파일명을 랜덤메소드를 이용하여 생성
+	public String rename() {
+		Date day = new Date();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyyMMdd");
+		String today = sf.format(day);
 		
-    
-        String fileName = file.getOriginalFilename();
-		//파일저장경로 설정
-		String filePath = req.getServletContext().getRealPath("/project0729/") + fileName;
+		int no = (int)Math.ceil(Math.random()*1000);
+		String datacode = today + no;
+		return datacode;
+	}
+	//
+	private String saveFile(MultipartFile file, String uploadPath) throws Exception{
 		
+		if(file.getSize() > 0) {
+			String oriName = file.getOriginalFilename();
+			String newName = this.rename() + "_" + oriName;
+			
+            File saveFile = new File(uploadPath + newName);
+            file.transferTo(saveFile);
+
+            return newName;			
+		}		
+		return null;
+	}	
+	//
+	public void handleFile(MultipartFile[] pd_image,product_dao dao,HttpServletRequest req) throws Exception{
+				
+		String uploadPath  = req.getServletContext().getRealPath("/project0729/");
+		int index = 0;
 		
-		//파일 저장
-		File dest = new File(filePath);
-		file.transferTo(dest);
-		
-		
-		return fileName;
+		for(MultipartFile file : pd_image) {
+			String newName = saveFile(file, uploadPath);
+			
+			if (newName != null) {
+                switch (index) {
+                    case 0:
+                        dao.setProduct_image_origin(newName);
+                        break;
+                    case 1:
+                        dao.setProduct_image_additional_1(newName);
+                        break;
+                    case 2:
+                        dao.setProduct_image_additional_2(newName);
+                        break;
+                    default:
+                        // 3개 이상의 파일이 있는 경우 추가 처리 가능
+                        break;
+                }
+                index++;		
+			}			
+		}
 	}
 	
     // 상품 정보를 DB에 insert하는 메서드
