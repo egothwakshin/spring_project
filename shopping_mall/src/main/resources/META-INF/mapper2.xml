@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop_source">
 
+
+
+<delete id="product_delete" >
+delete from product_registration where product_id=
+
+#{product_id}
+</delete>
+
 <select id="privacyPolicy_select" resultType="privacyPolicy_dao">
 select p_content from privacy_policy order by pidx desc
 </select>

@@ -115,8 +115,27 @@ function go_ct_list(){
 }
 
 const DeleteProduct = function(){
-	var kk = document.querySelectorAll("input[name='ck']:checked")
-
+	const ckBox = document.querySelectorAll("input[name='ck']:checked")
+	const ckArr = [];
+	for(var a=0; a<ckBox.length; a++){
+		ckArr[a]= ckBox[a].value;
+	}
+	//console.log(ckArr);
+	fetch('/deleteProduct',{
+		method:"POST",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify(ckArr)
+		
+	})
+	.then(function(response){
+		alert('테스트입니다');
+		return response.json();
+	})
+	.catch(function(error){
+		console.log(error)
+	})
 	
 }
 document.querySelector("#DeleteProductBtn").addEventListener("click", DeleteProduct);

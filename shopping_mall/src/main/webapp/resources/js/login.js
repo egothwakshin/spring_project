@@ -15,7 +15,7 @@ const login = function(){
 		userpw : pw	
 	}
 	fetch('/test/login',{
-		method : "POST",
+		method : "POST",	
 		headers : {
 			"Content-Type" : "application/json"
 		},

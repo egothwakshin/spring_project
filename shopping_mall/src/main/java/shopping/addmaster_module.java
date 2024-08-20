@@ -67,6 +67,17 @@ public class addmaster_module {
 		return result;
 	}
 	
+	
+	//상품 선택삭제
+	public List<String> product_delete(List<String> dp){
+		//System.out.println(dp.get(0));
+		//System.out.println(dp.get(1));
+		//tm2.delete("product_delete", dp)
+		return null;
+	}
+	
+	
+	
 	//상품 셋팅
 	public List<product_dao> product_selectlist(product_dao dao){
 		List<product_dao> lp = tm2.selectList("shop_source.product_select",dao);
