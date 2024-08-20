@@ -90,9 +90,7 @@
 <script>
 function go_terms(){
 	
-	var termsText = $("#terms_use").val();
-	
-	
+	var termsText = $("#terms_use").val();	
 	$.ajax({
 		type:"post",
 		url:"/submitTermsAjax",
@@ -106,36 +104,27 @@ function go_terms(){
             console.error('AJAX Error:', status, error);
             alert("이용약관 수정에 실패했습니다.");
 		}
-	
-	});
-	
-	
+	});	
 }
+
 function go_privacy_policy(){
 
 	var privacy_Text = $("#privacy_policy").val();
-	
+	console.log(privacy_Text);
 	$.ajax({
 		type:"post",
-		url:"/submitPAjax",
-		data:{termsText: termsText},
+		url:"/submitPrivacyAjax",
+		data:{privacy_Text: privacy_Text},
 		//dataType: 'json',
 		success:function(response){
-			$('#terms_use').val(response.terms);
-			alert("이용약관이 수정되었습니다.");
+			$('#privacy_policy').val(response.privacy_Text);
+			alert("개인정보 약관이 수정되었습니다.");
 		},
 		error:function(xhr,status,error){
             console.error('AJAX Error:', status, error);
-            alert("이용약관 수정에 실패했습니다.");
-		}
-		
-		
-		
-		
-		
-		
-	});
-	
+            alert("개인정보 약관 수정에 실패했습니다.");
+		}		
+	});	
 	
 }
 

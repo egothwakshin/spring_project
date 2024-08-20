@@ -23,18 +23,18 @@
 <%@ include file="./top.jsp" %>
 <main class="maincss">
 <section>
+<form id="frm" method="post" action="/deleteProduct">
 <p>상품관리 페이지</p>
 <div class="subpage_view">
     <span>등록된 상품 0건</span>
     <span>
-        <form>
         <select class="p_select1">
             <option>상품명</option>
             <option>상품코드</option>
         </select>
         <input type="text" class="p_input1" placeholder="검색어를 입력해 주세요">
         <input type="submit" value="검색" title="상품검색" class="p_submit">
-        </form>
+
     </span>
 </div>
 <div class="subpage_view2">
@@ -60,9 +60,10 @@
     </cr:when>
     <cr:otherwise>
     	<cr:forEach var="pd_data" items="${pd_data}" >
-    <ul>
-        <li><input type="checkbox"></li>
-        <li>${pd_data.product_id}</li>
+
+    <ul> 	
+        <li><input type="checkbox" name="ck" value="${pd_data.product_id}" ></li>
+        <li>${pd_data.product_code}</li>
         <!--  <li><img src="../project0729/${pd_data.product_image_origin}" style="width: 30px; height: 30px;"/></li>-->
         <li><a href="../project0729/${pd_data.product_image_origin}"><img src="../project0729/${pd_data.product_image_origin}" style="width: 25px; height: 25px;"/></a></li>
         <li>${pd_data.product_name}</li>
@@ -75,6 +76,7 @@
         <li>${pd_data.early_end}</li>
         <li>관리</li>
     </ul>
+
    		</cr:forEach>
    	 </cr:otherwise>
    	</cr:choose>  
@@ -89,12 +91,13 @@
     </ul>
 </div>
 <div class="subpage_view4">
-    <input type="button" value="선택상품 삭제" title="선택상품 삭제" class="p_button">
+    <input type="button" value="선택상품 삭제" title="선택상품 삭제" class="p_button" id="DeleteProductBtn">
     <span style="float: right;">
     <input type="button" value="신규상품 등록" title="신규상품 등록" class="p_button p_button_color1" onclick="go_pd_write()">
     <input type="button" value="카테고리 등록" title="카테고리 등록" class="p_button p_button_color2" onclick="go_ct_list()">
     </span>
 </div>
+</form>
 </section>
 </main>
 <footer class="main_copyright">
@@ -108,8 +111,16 @@ function go_pd_write(){
 	location.href = "./product_write.do";
 }
 function go_ct_list(){
-	location.href = "./cate_list.jsp";
+	location.href = "./cate_list.do";
 }
+
+const DeleteProduct = function(){
+	var kk = document.querySelectorAll("input[name='ck']:checked")
+
+	
+}
+document.querySelector("#DeleteProductBtn").addEventListener("click", DeleteProduct);
+
 
 </script>
 </html>

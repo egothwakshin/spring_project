@@ -29,16 +29,32 @@ public class admin_controller {
 	@Resource(name = "addmaster")
 	private addmaster_module am;
 	
-	
-	//이용약관 다른 뷰페이지에 출력
+	//이용약관,개인정보약관 출력
 	@GetMapping("/mallpage/agree.do")
-	public String ct_select(Model m) throws Exception{
+	public String pp_select(Model m)throws Exception{
+		
 		List<terms_dao> td = am.terms_select();
-		m.addAttribute("termsText", td.get(0).getT_content() );
+		List<privacyPolicy_dao> pd = am.privacyPolicy_select();
+		
+		m.addAttribute("termsText", td.get(0).getT_content());
+		m.addAttribute("privacy_Text", pd.get(0).getP_content());
+		
 		return "/mallpage/agree";
-
 	}
 	
+	//개인정보 약관 수정
+	@PostMapping("/submitPrivacyAjax")
+	@ResponseBody
+	public Map<String, String> submitPrivacyAjax(@RequestParam("privacy_Text")String privacy_Text) throws Exception{
+
+		int result = am.privacyPolicy_insert(privacy_Text);
+		
+		Map<String, String> response = new HashMap<String, String>();
+		response.put("privacy_Text", privacy_Text);
+		
+		return response;
+		
+	}
 	
 	//이용약관 수정
 	//@PostMapping(value = "/submitTermsAjax", produces = "application/json")
@@ -51,8 +67,7 @@ public class admin_controller {
 		Map<String, String> response = new HashMap<String, String>();
 		response.put("terms", termsText);
 		
-		return response;
-		
+		return response;		
 	}
 	
 
@@ -113,7 +128,6 @@ public class admin_controller {
 	public String pd_select(Model m,product_dao dao) throws Exception{
 		List<product_dao> pd_data = am.product_selectlist(dao);
 		m.addAttribute("pd_data", pd_data);
-		System.out.println(pd_data.get(0).getProduct_image_origin());
 		
 		return "/shop_source/product_list";
 	}	

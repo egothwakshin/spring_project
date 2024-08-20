@@ -10,5 +10,6 @@
 		<typeAlias alias="category_dao" type="shopping.category_dao"/>
 		<typeAlias alias="gmember_dao" type="shopping.gmember_dao"/>
 		<typeAlias alias="terms_dao" type="shopping.terms_dao"/>
+		<typeAlias alias="privacyPolicy_dao" type="shopping.privacyPolicy_dao"/>
 	</typeAliases>
   </configuration>

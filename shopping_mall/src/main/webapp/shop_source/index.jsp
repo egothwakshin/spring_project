@@ -51,7 +51,7 @@
 <script>
 function go_ad(){
 	frm.method="post";
-	frm.action="./shop_member_list.do";
+	frm.action="./shop_member_list.do"; 
 	return true;		
 }
 function add_master(){

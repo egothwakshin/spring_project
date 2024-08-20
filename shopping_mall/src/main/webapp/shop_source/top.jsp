@@ -4,6 +4,12 @@
 	HttpSession sessionHttpSession = request.getSession();
 	String mname = (String) session.getAttribute("mname");
 	String mid = (String) session.getAttribute("mid");
+	
+	if(mname==null){
+		//response.sendRedirect("/shop_source/index.jsp");
+		response.sendRedirect("/shop_source/index.jsp");
+		return;
+	}
 %>
 <header class="headercss">
     <div class="header_div">

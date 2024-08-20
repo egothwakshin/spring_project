@@ -46,7 +46,7 @@
 							<label class="check_s" for="termsAgree1"><strong>(필수)</strong> 이용약관</label>
 							<span><a href="#" target="_blank">전체보기</a></span>
 						</div>
-						<div class="agreement_box" id="termsOutput">
+						<div class="agreement_box">
 							<cr:out value="${termsText}" /> 
 						</div>
 					
@@ -59,7 +59,7 @@
 							<span><a href="#" target="_blank">전체보기</a></span>
 						</div>
 						<div class="agreement_box">
-							
+							<cr:out value="${privacy_Text}" /> 
 						</div>
 					</div>
 					<div class="important_check_box">
