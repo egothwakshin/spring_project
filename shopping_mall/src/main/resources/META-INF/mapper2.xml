@@ -4,11 +4,14 @@
 
 
 
-<delete id="product_delete" >
-delete from product_registration where product_id=
-
-#{product_id}
+<delete id="product_delete">
+    DELETE FROM product_registration 
+    WHERE product_id IN 
+    <foreach item="product_id" collection="list" open="(" separator="," close=")">
+        #{product_id}
+    </foreach>
 </delete>
+
 
 <select id="privacyPolicy_select" resultType="privacyPolicy_dao">
 select p_content from privacy_policy order by pidx desc

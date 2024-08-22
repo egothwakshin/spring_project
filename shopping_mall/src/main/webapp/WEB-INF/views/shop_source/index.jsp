@@ -7,17 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 페이지</title>
-    <link rel="stylesheet" type="text/css" href="./css/basic.css?v=4">
-    <link rel="stylesheet" type="text/css" href="./css/mainlogin.css?v=4">
-    <link rel="icon" href="./img/logo.png" sizes="128x128">
-    <link rel="icon" href="./img/logo.png" sizes="64x64">
-    <link rel="icon" href="./img/logo.png" sizes="32x32">
-    <link rel="icon" href="./img/logo.png" sizes="16x16">
+    <link rel="stylesheet" type="text/css" href="/resources/css/basic.css?v=4">
+    <link rel="stylesheet" type="text/css" href="/resources/css/mainlogin.css?v=4">
+    <link rel="icon" href="/resources/img/logo.png" sizes="128x128">
+    <link rel="icon" href="/resources/img/logo.png" sizes="64x64">
+    <link rel="icon" href="/resources/img/logo.png" sizes="32x32">
+    <link rel="icon" href="/resources/img/logo.png" sizes="16x16">
 </head>
 <form id="frm" onsubmit="return go_ad()">
 <body class="bodycss">
     <header class="admin_title">
-        <p><img src="./img/logo.png" class="logo_sm"> ADMINISTRATOR</p>
+        <p><img src="/resources/img/logo.png" class="logo_sm"> ADMINISTRATOR</p>
     </header>
     <section class="admin_bgcolor">
         <div class="admin_login">
@@ -51,12 +51,12 @@
 <script>
 function go_ad(){
 	frm.method="post";
-	frm.action="./shop_member_list.do"; 
+	frm.action="/shop_member_list"; 
 	return true;		
 }
 function add_master(){
 	frm.method="post";
-	frm.action="./add_master.jsp";
+	frm.action="/go_add_master";
 	frm.submit();
 }
 </script>

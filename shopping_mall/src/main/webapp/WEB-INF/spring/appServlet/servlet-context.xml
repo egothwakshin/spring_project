@@ -21,11 +21,12 @@
 	<resources location="/mallpage/" mapping="/mallpage/**"/>
 	<resources location="/pay/" mapping="/pay/**"/>
 	<resources location="/project0729/" mapping="/project0729/**"/>
+	<resources location="/static/" mapping="/static/**"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<!--  <beans:property name="prefix" value="/WEB-INF/views/" />--> 
-		<beans:property name="prefix" value="/" />
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<!-- <beans:property name="prefix" value="/" />--> 
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	

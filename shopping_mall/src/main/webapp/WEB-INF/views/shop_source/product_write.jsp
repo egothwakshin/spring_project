@@ -25,14 +25,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상품등록 페이지</title>
     <script src="./js/jquery.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/basic.css">
-    <link rel="stylesheet" type="text/css" href="./css/login.css?v=1">
-    <link rel="stylesheet" type="text/css" href="./css/main.css">
-    <link rel="stylesheet" type="text/css" href="./css/product.css?v=5">
-    <link rel="icon" href="./img/logo.png" sizes="128x128">
-    <link rel="icon" href="./img/logo.png" sizes="64x64">
-    <link rel="icon" href="./img/logo.png" sizes="32x32">
-    <link rel="icon" href="./img/logo.png" sizes="16x16">
+    <link rel="stylesheet" type="text/css" href="/resources/css/basic.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/login.css?v=1">
+    <link rel="stylesheet" type="text/css" href="/resources/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/product.css?v=5">
+    <link rel="icon" href="/resources/img/logo.png" sizes="128x128">
+    <link rel="icon" href="/resources/img/logo.png" sizes="64x64">
+    <link rel="icon" href="/resources/img/logo.png" sizes="32x32">
+    <link rel="icon" href="/resources/img/logo.png" sizes="16x16">
 </head>
 <body>
 <%@ include file="./top.jsp" %>
@@ -166,7 +166,7 @@ $(function(){
 		var pd_code = $('#pd_code').val();
 
 		$.ajax({
-			url: './duplicate_pd.do',
+			url: '/duplicate_pd',
 			type: 'post',
 			data: {pd_code: pd_code},
 			success: function($response){
@@ -185,17 +185,17 @@ $(function(){
 });
 
 function go_ct_list(){
-	location.href = "./cate_list.do";
+	location.href = "/cate_list";
 }
 function go_pd_list(){
-	location.href = "./product_list.jsp";
+	location.href = "/product_list";
 }
 function go_pd_regist(){
 	var aa = frm.category_pd.value;
 	console.log(aa);
 	
 	frm.method = "post";
-	frm.action = "./product_regist.do";
+	frm.action = "/product_regist";
 	frm.submit();	
 }
 

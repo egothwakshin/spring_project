@@ -10,13 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>쇼핑몰 회원관리</title>
     <script src="./js/jquery.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/basic.css?v=2">
-    <link rel="stylesheet" type="text/css" href="./css/login.css?v=2">
-    <link rel="stylesheet" type="text/css" href="./css/main.css?v=2">
-    <link rel="icon" href="./img/logo.png" sizes="128x128">
-    <link rel="icon" href="./img/logo.png" sizes="64x64">
-    <link rel="icon" href="./img/logo.png" sizes="32x32">
-    <link rel="icon" href="./img/logo.png" sizes="16x16">
+    <link rel="stylesheet" type="text/css" href="/resources/css/basic.css?v=2">
+    <link rel="stylesheet" type="text/css" href="/resources/css/login.css?v=2">
+    <link rel="stylesheet" type="text/css" href="/resources/css/main.css?v=2">
+    <link rel="icon" href="/resources/img/logo.png" sizes="128x128">
+    <link rel="icon" href="/resources/img/logo.png" sizes="64x64">
+    <link rel="icon" href="/resources/img/logo.png" sizes="32x32">
+    <link rel="icon" href="/resources/img/logo.png" sizes="16x16">
 </head>
 <body>
 <%@ include file="./top.jsp" %>
@@ -129,11 +129,17 @@ function go_privacy_policy(){
 }
 
 
+
+
 function gstop_ok(gidx,gstop){
 	
 	if(gstop=='N'){
 		if(confirm('해당 계정을 휴면계정으로 전환하시겠습니까?')){
-			location.href = "./gmember_stop.do?gidx="+gidx+"&gstop="+gstop;
+			fetch("/gmember_stop?gidx="+gidx+"&gstop="+gstop)
+			.then(function(response) {
+				console.log(response);
+			})
+			
 		}
 	}
 	else{
@@ -145,7 +151,11 @@ function gstop_no(gidx,gstop){
 	
 	if(gstop=='Y'){
 		if(confirm('해당 계정을 휴면 해제하시겠습니까?')){
-			location.href = "./gmember_stop.do?gidx="+gidx+"&gstop="+gstop;
+			fetch("/gmember_stop?gidx="+gidx+"&gstop="+gstop)
+			.then(function(response) {
+				console.log(response);
+			})
+					
 		}
 	}
 	else{

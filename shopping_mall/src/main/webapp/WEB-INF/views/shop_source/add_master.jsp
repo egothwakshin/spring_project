@@ -9,16 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 등록 페이지</title>
     <script src="./js/jquery.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/basic.css">
-    <link rel="stylesheet" type="text/css" href="./css/login.css?v=1">
-    <link rel="icon" href="./img/logo.png" sizes="128x128">
-    <link rel="icon" href="./img/logo.png" sizes="64x64">
-    <link rel="icon" href="./img/logo.png" sizes="32x32">
-    <link rel="icon" href="./img/logo.png" sizes="16x16">
+    <link rel="stylesheet" type="text/css" href="/resources/css/basic.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/login.css?v=1">
+    <link rel="icon" href="/resources/img/logo.png" sizes="128x128">
+    <link rel="icon" href="/resources/img/logo.png" sizes="64x64">
+    <link rel="icon" href="/resources/img/logo.png" sizes="32x32">
+    <link rel="icon" href="/resources/img/logo.png" sizes="16x16">
 </head>
 <body>
     <header class="admin_title_add">
-        <p><img src="./img/logo.png" class="logo_sm"> ADMINISTRATOR ADD</p>
+        <p><img src="/resources/img/logo.png" class="logo_sm"> ADMINISTRATOR ADD</p>
     </header>
 
     <section class="admin_bgcolor_add">
@@ -90,7 +90,7 @@ $(function(){
 		var ad_id = $('#ad_id').val();
 		
 		$.ajax({
-			url: './duplicate_id.do',
+			url: '/duplicate_id',
 			type: 'POST',
 			data: {ad_id: ad_id},
 			success: function($response){
@@ -140,7 +140,7 @@ function go_add(){
 	}
 	else{
 		frm.method="post";
-		frm.action="./add_master.do";
+		frm.action="/add_master";
 		frm.submit();		
 	}
 	

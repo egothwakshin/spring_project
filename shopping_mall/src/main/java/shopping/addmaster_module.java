@@ -70,9 +70,9 @@ public class addmaster_module {
 	
 	//상품 선택삭제
 	public List<String> product_delete(List<String> dp){
-		//System.out.println(dp.get(0));
-		//System.out.println(dp.get(1));
-		//tm2.delete("product_delete", dp)
+		
+		int result = tm2.delete("shop_source.product_delete", dp);
+		System.out.println(result);
 		return null;
 	}
 	
@@ -216,21 +216,10 @@ public class addmaster_module {
 	
 	//로그인한 당사자 셀렉트원
 	public ArrayList<Object> select_one(addmaster_dao dao) {
-		try {
-			MessageDigest md5 = MessageDigest.getInstance("MD5");
-			md5.update(dao.ad_pw.getBytes());
-			byte m[] = md5.digest();
-			StringBuilder sb = new StringBuilder();
-			for(byte w : m) {
-				String word = String.format("%x", w);
-				sb.append(word);
-			}
-			dao.ad_pw = sb.toString();
-		}catch(Exception e) {
-			System.out.println(e);
-		}		
 		
-		addmaster_dao onedata = tm2.selectOne("shop_source.search_ad", dao);
+		SecurityPasswordEntity SecurityPasswordEntity = new SecurityPasswordEntity(dao);
+
+		addmaster_dao onedata = tm2.selectOne("shop_source.search_ad", SecurityPasswordEntity);
 		ArrayList<Object> onearr = new ArrayList<Object>();
 		if(onedata==null) {
 			onearr.add(null);
