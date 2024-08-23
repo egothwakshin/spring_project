@@ -69,11 +69,10 @@ public class addmaster_module {
 	
 	
 	//상품 선택삭제
-	public List<String> product_delete(List<String> dp){
+	public int product_delete(List<String> dp){
 		
 		int result = tm2.delete("shop_source.product_delete", dp);
-		System.out.println(result);
-		return null;
+		return result;
 	}
 	
 	

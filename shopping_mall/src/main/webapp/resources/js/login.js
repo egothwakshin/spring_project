@@ -1,5 +1,6 @@
 const login = function(){
 	
+	const id2 = document.querySelectorAll
 	const id = document.querySelector("#mid").value;
 	const pw = document.querySelector("#aa").value;
 	const checkbox = document.querySelectorAll(".ck");
@@ -26,7 +27,6 @@ const login = function(){
 	})
 	.then(function(data){
 		console.log(data.userid);
-		//return data
 	})
 	.catch(function(error){
 		console.log(error)

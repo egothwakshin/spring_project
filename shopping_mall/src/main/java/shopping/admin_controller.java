@@ -145,9 +145,18 @@ public class admin_controller {
 	// @상품 선택삭제
 	@PostMapping("/deleteProduct")
 	@ResponseBody
-	public List<String> deleteProduct(@RequestBody List<String> dp) throws Exception {
-		am.product_delete(dp);
-		return null;
+	public Map<String, Integer> deleteProduct(@RequestBody List<String> dp) throws Exception {
+		//System.out.println("ckArr을 List배열로 받은 출력형태는?" + dp);
+		int result = am.product_delete(dp);
+		Map<String, Integer> mp = new HashMap<String, Integer>();
+		if(result>0) {
+			mp.put("result", result);
+		}
+		else {
+			mp.put("result", result);
+		}
+		
+		return mp;
 	}
 
 	// 상품 리스트 출력

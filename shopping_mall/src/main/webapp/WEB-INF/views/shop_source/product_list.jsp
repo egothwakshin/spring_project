@@ -65,7 +65,14 @@
         <li><input type="checkbox" name="ck" value="${pd_data.product_id}" ></li>
         <li>${pd_data.product_code}</li>
         <!--  <li><img src="../project0729/${pd_data.product_image_origin}" style="width: 30px; height: 30px;"/></li>-->
-        <li><a href="../project0729/${pd_data.product_image_origin}"><img src="../project0729/${pd_data.product_image_origin}" style="width: 25px; height: 25px;"/></a></li>
+        <cr:choose>
+	        <cr:when test="${pd_data.product_image_origin ne null}">
+	        	<li><a href="../project0729/${pd_data.product_image_origin}"><img src="../project0729/${pd_data.product_image_origin}" style="width: 25px; height: 25px;"/></a></li>
+	        </cr:when>
+	        <cr:otherwise>
+	        	<li>(이미지 첨부 없음)</li>
+	        </cr:otherwise>
+        </cr:choose>
         <li>${pd_data.product_name}</li>
         <li>${pd_data.category_pd}</li>
         <li>${pd_data.sale_price}</li>
@@ -83,11 +90,11 @@
 </div>
 <div class="subpage_view3">
     <ul class="pageing">
-        <li><img src="./ico/double_left.svg"></li>
-        <li><img src="./ico/left.svg"></li>
+        <li><img src="/resources/ico/double_left.svg"></li>
+        <li><img src="/resources/ico/left.svg"></li>
         <li>1</li>
-        <li><img src="./ico/right.svg"></li>
-        <li><img src="./ico/double_right.svg"></li>
+        <li><img src="/resources/ico/right.svg"></li>
+        <li><img src="/resources/ico/double_right.svg"></li>
     </ul>
 </div>
 <div class="subpage_view4">
@@ -129,10 +136,19 @@ const DeleteProduct = function(){
 		body : JSON.stringify(ckArr)
 		
 	})
-	.then(function(response){
-		console.log(response);
-		alert('테스트입니다');
-		return response.json();
+	.then(function(mp){
+		return mp.json();
+	})
+	.then(function(data){
+		//console.log("data.result의 값은?" + data.result);
+		if(data.result>0){
+			alert('선택한 상품이 삭제되었습니다.');
+			location.href="/product_list";
+		}
+		else{
+			alert('선택한 상품이 없습니다.');
+			location.href="/product_list";
+		}
 	})
 	.catch(function(error){
 		console.log(error)
