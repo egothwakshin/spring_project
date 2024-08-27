@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,10 +70,16 @@ public class addmaster_module {
 	
 	
 	//상품 선택삭제
-	public int product_delete(List<String> dp){
-		
-		int result = tm2.delete("shop_source.product_delete", dp);
-		return result;
+	public ResponseEntity<Integer> product_delete(List<String> dp){
+		int result = 1004;
+		try {	
+			result = tm2.delete("shop_source.product_delete", dp);
+			return ResponseEntity.ok().build();
+		}
+		catch(Exception e){	
+			return ResponseEntity.status(411).build();
+		}	
+
 	}
 	
 	

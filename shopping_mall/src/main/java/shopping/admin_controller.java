@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import javax.swing.text.Document;
 
 import org.apache.tomcat.util.log.UserDataHelper.Mode;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,9 +47,8 @@ public class admin_controller {
 	}
 
 
-	@GetMapping("/noticeList")
+	@GetMapping("/notice_list")
 	public String notice_list() {
-		System.out.println("노티스티르슽테스트");
 
 		return "/shop_source/notice_list";
 	}
@@ -145,18 +146,10 @@ public class admin_controller {
 	// @상품 선택삭제
 	@PostMapping("/deleteProduct")
 	@ResponseBody
-	public Map<String, Integer> deleteProduct(@RequestBody List<String> dp) throws Exception {
-		//System.out.println("ckArr을 List배열로 받은 출력형태는?" + dp);
-		int result = am.product_delete(dp);
-		Map<String, Integer> mp = new HashMap<String, Integer>();
-		if(result>0) {
-			mp.put("result", result);
-		}
-		else {
-			mp.put("result", result);
-		}
-		
-		return mp;
+	public ResponseEntity<Integer> deleteProduct(@RequestBody List<String> dp) throws Exception {
+		ResponseEntity<Integer> response = am.product_delete(dp);
+
+		return response;
 	}
 
 	// 상품 리스트 출력
@@ -213,7 +206,7 @@ public class admin_controller {
 	public String gm_stop(Model m, int gidx, String gstop) throws Exception {
 
 		int result = am.update_gstop(gidx, gstop);
-		System.out.println(result);
+		
 		if (result > 0) {
 			List<gmember_dao> gm = am.gm_selectList();
 			m.addAttribute("gm", gm);

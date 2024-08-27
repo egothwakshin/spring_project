@@ -121,40 +121,45 @@ function go_ct_list(){
 	location.href = "/cate_list";
 }
 
+
 const DeleteProduct = function(){
 	const ckBox = document.querySelectorAll("input[name='ck']:checked")
 	const ckArr = [];
+	const bean = [];
 	for(var a=0; a<ckBox.length; a++){
 		ckArr[a]= ckBox[a].value;
 	}
-	//console.log(ckArr);
-	fetch('/deleteProduct',{
-		method:"POST",
-		headers : {
-			"Content-Type" : "application/json"
-		},
-		body : JSON.stringify(ckArr)
-		
-	})
-	.then(function(mp){
-		return mp.json();
-	})
-	.then(function(data){
-		//console.log("data.result의 값은?" + data.result);
-		if(data.result>0){
-			alert('선택한 상품이 삭제되었습니다.');
-			location.href="/product_list";
-		}
-		else{
-			alert('선택한 상품이 없습니다.');
-			location.href="/product_list";
-		}
-	})
-	.catch(function(error){
-		console.log(error)
-	})
 	
+	if(ckArr.length==0){
+		alert('선택하신 상품이 없습니다.');
+	}
+	else{
+		if(confirm('선택하신 상품을 삭제하시겠습니까?')){
+			fetch('/deleteProduct',{
+				method:"POST",
+				headers : {
+					"Content-Type" : "application/json"
+				},
+				body : JSON.stringify(ckArr)
+				
+			})
+			.then(function(response){
+				if(response.ok==true){
+					alert('선택하신 상품이 삭제되었습니다.');
+					location.href='/product_list';
+				}else{
+					alert('선택하신 상품의 삭제가 실패하였습니다')
+					location.href='/product_list';
+				}
+			})
+			.catch(function(error){
+				console.log(error);
+			})
+		}
+	}
+		
 }
+	
 document.querySelector("#DeleteProductBtn").addEventListener("click", DeleteProduct);
 
 
