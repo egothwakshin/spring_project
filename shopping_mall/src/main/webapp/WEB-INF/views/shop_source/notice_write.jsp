@@ -54,7 +54,7 @@
 </ul>
 </div>
 <div class="board_btn">
-    <button class="border_del">공지목록</button>
+    <button class="border_del" onclick="notice_list()">공지목록</button>
     <button class="border_add">공지등록</button>
 </div>
 </section>
@@ -65,4 +65,9 @@
     </div>
 </footer>
 </body>
+<script>
+function notice_list(){
+	location.href = "/noticeList";
+}
+</script>
 </html>

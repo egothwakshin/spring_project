@@ -25,29 +25,6 @@ public class addmaster_module {
 	@Resource(name = "template2")
 	private SqlSessionTemplate tm2;
 	
-	//개인정보약관 출력
-	public List<privacyPolicy_dao> privacyPolicy_select(){
-		List<privacyPolicy_dao> pd = tm2.selectList("shop_source.privacyPolicy_select");
-		return pd;
-	}
-	
-	//개인정보약관 수정(입력)
-	public int privacyPolicy_insert(String content) {
-		int result = tm2.insert("shop_source.privacyPolicy_insert",content);
-		return result;
-	}
-	
-	//이용약관 출력
-	public List<terms_dao> terms_select(){
-		List<terms_dao> td = tm2.selectList("shop_source.terms_select");
-		return td;
-	}
-	
-	//이용약관 수정(입력)
-	public int terms_insert(String content) {
-		int result = tm2.insert("shop_source.terms_insert", content);
-		return result;
-	}
 	
 	//일반회원리스트 출력
 	public List<gmember_dao> gm_selectList(){

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop_source">
+
+
+
+<delete id="product_delete">
+    DELETE FROM product_registration 
+    WHERE product_id IN 
+    <foreach item="product_id" collection="list" open="(" separator="," close=")">
+        #{product_id}
+    </foreach>
+</delete>
+
+
+<select id="privacyPolicy_select" resultType="privacyPolicy_dao">
+select p_content from privacy_policy order by pidx desc
+</select>
+
+<insert id="privacyPolicy_insert">
+insert into privacy_policy values('0',#{p_content},now())
+</insert>
+
+
+<select id="terms_select" resultType="terms_dao">
+select t_content from terms order by tidx desc
+</select>
+
+<insert id="terms_insert">
+insert into terms values('0',#{t_content},now())
+</insert>
+
+<select id="gmember_select" resultType="gmember_dao">
+select * from general_member order by gidx desc
+</select>
+
+<insert id="gmember_insert">
+insert into general_member values ('0',#{gid},#{gpw},#{gname},#{gemail},#{ghp},#{gemail_ok},#{gsms_ok},#{gstop},now())
+</insert>
+
+<select id="duplicate_pd" resultType="int">
+select count(*) from product_registration where product_code=#{product_code}
+</select>
+
+
+<select id="category_select" resultType="category_dao">
+select * from category order by cidx desc
+</select>
+
+<insert id="category_insert">
+insert into category values ('0',#{category_code},#{main_menu_code},#{main_menu_name},#{category_use})
+</insert>
+
+
+<select id="product_select" resultType="product_dao">
+select * from product_registration order by product_id desc;
+</select>
+
+<insert id="product_insert">
+insert into product_registration values ('0',#{category_pd},#{product_code},#{product_name},#{product_description},
+#{sale_price},#{discount_rate},#{discount_price},#{stock_quantity},#{sale_status},#{early_end},#{product_image_origin},
+#{product_image_additional_1},#{product_image_additional_2},#{detailed_description})
+</insert>
+
+<select id="siteinfo_onedata" resultType="sitesettings_dao">
+select * from site_settings order by sidx desc limit 1;
+</select>
+
+
+<insert id="siteinfo_insert">
+insert into site_settings (sidx,homepage_title,admin_email,point_use,initial_point,
+membership_level,company_name,business_number,ceo_name,representative_phone,mail_order_number,
+additional_business_number,company_zipcode,company_address,info_manager_name,info_manager_email,
+bank_name,bank_account,credit_card_use,mobile_payment_use,book_coupon_payment_use,min_payment_point,
+max_payment_point,offline_payment_use,delivery_company_name,delivery_cost,desired_delivery_date_use)
+values ('0',#{homepage_title},#{admin_email},#{point_use},#{initial_point},
+#{membership_level},#{company_name},#{business_number},#{ceo_name},#{representative_phone},#{mail_order_number},
+#{additional_business_number},#{company_zipcode},#{company_address},#{info_manager_name},#{info_manager_email},
+#{bank_name},#{bank_account},#{credit_card_use},#{mobile_payment_use},#{book_coupon_payment_use},#{min_payment_point},
+#{max_payment_point},#{offline_payment_use},#{delivery_company_name},#{delivery_cost},#{desired_delivery_date_use})
+</insert>
+
+<!--관리자 승인 여부 (admin)-->
+<update id="update_approve" parameterType="map">
+update add_master set ad_approve=
+<choose>
+	<when test='approve=="N"'>'Y'</when>
+	<when test='approve=="Y"'>'N'</when>
+	<otherwise>ad_approve</otherwise>
+</choose>
+where aidx=#{adix}
+</update>
+
+<!-- 일반회원 정지 여부 -->
+<update id="gm_stop" parameterType="map">
+update general_member set gstop=
+<choose>
+	<when test='gstop=="N"'>'Y'</when>	
+	<when test='gstop=="Y"'>'N'</when>
+	<otherwise>gstop</otherwise>	
+</choose>
+where gidx=#{gidx}
+</update>
+
+<select id="search_ad" resultType="addmaster_dao">
+select * from add_master where ad_id=#{ad_id} and ad_pw=#{ad_pw}
+</select>
+
+<select id="select_master" resultType="addmaster_dao">
+select * from add_master order by aidx desc
+</select>
+
+<insert id="insert_master">
+insert into add_master (aidx,ad_id,ad_pw,ad_name,ad_email,ad_tel1,ad_tel2,ad_tel3,ad_department,ad_position,ad_approve,adate)
+values ('0',#{ad_id},#{ad_pw},#{ad_name},#{ad_email},#{ad_tel1},#{ad_tel2},#{ad_tel3},#{ad_department},#{ad_position},#{ad_approve},now())
+</insert>
+
+<select id="duplicate_id" resultType="int">
+select count(*) from add_master where ad_id=#{ad_id}
+</select>
+</mapper>

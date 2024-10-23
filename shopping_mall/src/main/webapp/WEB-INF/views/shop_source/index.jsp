@@ -50,6 +50,7 @@
 </form>    
 <script>
 function go_ad(){
+	alert('로그인 되셨습니다.');
 	frm.method="post";
 	frm.action="/shop_member_list"; 
 	return true;		

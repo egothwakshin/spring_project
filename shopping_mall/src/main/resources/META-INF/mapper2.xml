@@ -13,8 +13,8 @@
 </delete>
 
 
-<select id="privacyPolicy_select" resultType="privacyPolicy_dao">
-select p_content from privacy_policy order by pidx desc
+<select id="privacyPolicy_select" resultType="string">
+select p_content from privacy_policy order by pidx desc LIMIT 1;
 </select>
 
 <insert id="privacyPolicy_insert">
@@ -22,8 +22,8 @@ insert into privacy_policy values('0',#{p_content},now())
 </insert>
 
 
-<select id="terms_select" resultType="terms_dao">
-select t_content from terms order by tidx desc
+<select id="terms_select" resultType="string">
+    SELECT t_content FROM terms ORDER BY tidx DESC LIMIT 1;
 </select>
 
 <insert id="terms_insert">

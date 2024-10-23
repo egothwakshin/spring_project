@@ -44,7 +44,7 @@
     </div>
     <div class="board_btn">
         <button class="border_del">공지삭제</button>
-        <button class="border_add">공지등록</button>
+        <button class="border_add" onclick="notice_regist()">공지등록</button>
     </div>
     <div class="border_page">
         <ul class="pageing">
@@ -63,4 +63,9 @@
     </div>
 </footer>
 </body>
+<script>
+function notice_regist(){
+	location.href = "/noticeWrite";
+}
+</script>
 </html>

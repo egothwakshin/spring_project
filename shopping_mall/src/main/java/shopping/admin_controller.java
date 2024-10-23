@@ -37,6 +37,23 @@ public class admin_controller {
 		return "/shop_source/index";
 	}
 	
+	
+	@GetMapping("/noticeView")
+	public String notice_view() {
+		return "shop_source/notice_view";
+	}
+	
+	@GetMapping("/noticeWrite")
+	public String notice_write() {
+		return "shop_source/notice_write";
+	}
+	
+	
+	@GetMapping("/noticeList")
+	public String notice_list() {
+		return "/shop_source/notice_list";
+	}
+	
 	@GetMapping("/cate_write")
 	public String cate_write() {	
 		return "/shop_source/cate_write";
@@ -46,53 +63,6 @@ public class admin_controller {
 		return "/shop_source/add_master";
 	}
 
-
-	@GetMapping("/notice_list")
-	public String notice_list() {
-
-		return "/shop_source/notice_list";
-	}
-
-	// 이용약관,개인정보약관 출력
-	@GetMapping("/mallpage/agree")
-	public String pp_select(Model m) throws Exception {
-
-		List<terms_dao> td = am.terms_select();
-		List<privacyPolicy_dao> pd = am.privacyPolicy_select();
-
-		m.addAttribute("termsText", td.get(0).getT_content());
-		m.addAttribute("privacy_Text", pd.get(0).getP_content());
-
-		return "/mallpage/agree";
-	}
-
-	// 개인정보 약관 수정
-	@PostMapping("/submitPrivacyAjax")
-	@ResponseBody
-	public Map<String, String> submitPrivacyAjax(@RequestParam("privacy_Text") String privacy_Text) throws Exception {
-
-		int result = am.privacyPolicy_insert(privacy_Text);
-
-		Map<String, String> response = new HashMap<String, String>();
-		response.put("privacy_Text", privacy_Text);
-
-		return response;
-
-	}
-
-	// 이용약관 수정
-	// @PostMapping(value = "/submitTermsAjax", produces = "application/json")
-	@PostMapping("/submitTermsAjax")
-	@ResponseBody
-	public Map<String, String> submitTermsAjax(@RequestParam("termsText") String termsText) throws Exception {
-
-		int result = am.terms_insert(termsText);
-
-		Map<String, String> response = new HashMap<String, String>();
-		response.put("terms", termsText);
-
-		return response;
-	}
 
 	// 일반회원관리
 	@GetMapping("/shop_member_list")

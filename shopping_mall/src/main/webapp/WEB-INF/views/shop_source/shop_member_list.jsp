@@ -88,6 +88,40 @@
 </footer>
 </body>
 <script>
+$(document).ready(function(){
+    loadTerms();
+    loadPrivacyPolicy();
+});
+
+function loadTerms() {
+    $.ajax({
+        type: "GET",
+        url: "/getTermsAjax",
+        success: function(response) {
+            // 서버에서 받은 이용약관 데이터를 textarea에 넣습니다.
+            $('#terms_use').val(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading terms:', status, error);
+        }
+    });
+}
+
+function loadPrivacyPolicy() {
+    $.ajax({
+        type: "GET",
+        url: "/getPrivacyPolicyAjax",
+        success: function(response) {
+            // 서버에서 받은 개인정보 약관 데이터를 textarea에 넣습니다.
+            $('#privacy_policy').val(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading privacy policy:', status, error);
+        }
+    });
+}
+
+
 function go_terms(){
 	
 	var termsText = $("#terms_use").val();	
@@ -95,8 +129,7 @@ function go_terms(){
 		type:"post",
 		url:"/submitTermsAjax",
 		data:{termsText: termsText},
-		//dataType: 'json',
-		success:function(response){
+		success: function(response){
 			$('#terms_use').val(response.terms);
 			alert("이용약관이 수정되었습니다.");
 		},
@@ -110,12 +143,10 @@ function go_terms(){
 function go_privacy_policy(){
 
 	var privacy_Text = $("#privacy_policy").val();
-	console.log(privacy_Text);
 	$.ajax({
 		type:"post",
 		url:"/submitPrivacyAjax",
 		data:{privacy_Text: privacy_Text},
-		//dataType: 'json',
 		success:function(response){
 			$('#privacy_policy').val(response.privacy_Text);
 			alert("개인정보 약관이 수정되었습니다.");
@@ -127,7 +158,6 @@ function go_privacy_policy(){
 	});	
 	
 }
-
 
 
 

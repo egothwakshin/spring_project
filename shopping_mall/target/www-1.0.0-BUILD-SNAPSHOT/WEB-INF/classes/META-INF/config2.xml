@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+  <configuration>
+  	<typeAliases>
+		<typeAlias alias="addmaster_dao" type="shopping.addmaster_dao"/>
+		<typeAlias alias="sitesettings_dao" type="shopping.sitesettings_dao"/>
+		<typeAlias alias="product_dao" type="shopping.product_dao"/>
+		<typeAlias alias="category_dao" type="shopping.category_dao"/>
+		<typeAlias alias="gmember_dao" type="shopping.gmember_dao"/>
+		<typeAlias alias="terms_dao" type="shopping.terms_dao"/>
+		<typeAlias alias="privacyPolicy_dao" type="shopping.privacyPolicy_dao"/>
+	</typeAliases>
+  </configuration>
