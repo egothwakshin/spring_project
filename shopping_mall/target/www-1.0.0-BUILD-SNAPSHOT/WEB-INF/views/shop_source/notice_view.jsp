@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,32 +26,36 @@
 <ul>
     <li>공지사항 제목</li>
     <li>
-       
+       <strong>${notice.title}</strong>
     </li>
 </ul>
 <ul>
     <li>글쓴이</li>
     <li>
-     
+      ${notice.writer}
     </li>
 </ul>
 <ul>
     <li>첨부파일</li>
     <li>
-       
+        <c:if test="${not empty notice.attachment}">
+            <a href="/downloadFile?fileName=${notice.attachment}" download>${notice.attachment}</a>
+        </c:if>
     </li>
 </ul>
 <ul class="ul_height">
     <li>공지내용</li>
     <li>
-        <div class="notice_input3" style="overflow-y: auto;"></div>
+        <div class="notice_input3" style="overflow-y: auto;">
+        	${notice.content}
+        </div>
     </li>
 </ul>
 </div>
 <div class="board_btn">
-    <button class="border_del">공지목록</button>
-    <button class="border_add">공지수정</button>
-    <button class="border_modify" style="margin-left: 8px;">공지삭제</button>
+    <button class="border_del" onclick="notice_list()">공지목록</button>
+    <button class="border_add" onclick="notice_modify()">공지수정</button>
+    <button class="border_modify" style="margin-left: 8px;" onclick="notice_delete()">공지삭제</button>
 </div>
 </section>
 </main>
@@ -60,4 +65,17 @@
     </div>
 </footer>
 </body>
+<script>
+function notice_list(){
+	location.href = "/noticeList";
+}
+function notice_modify(){
+	location.href="/noticeModify?id=${notice.id}";
+}
+function notice_delete(){
+    if (confirm("공지사항을 삭제하시겠습니까?")) {
+        location.href = "/noticeDelete?id=" + id;
+    }
+}
+</script>
 </html>

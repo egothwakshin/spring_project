@@ -30,7 +30,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.navershop.www,shopping,pay" />
+	<context:component-scan base-package="com.navershop.www,pay,shopping.controller,shopping.daoClass,shopping.service,shoppingDao" />
 	
 	<!-- File -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

@@ -24,8 +24,8 @@
             <span>
                 <div class="left_div">
                 <ul>
-                <li><input type="text" class="input_text1" name="ad_id" placeholder="관리자 아이디를 입력하세요"></li>
-                <li><input type="password" class="input_text1" name="ad_pw" placeholder="관리자 패스워드를 입력하세요"></li>
+                <li><input type="text" class="input_text1" name="ad_id" placeholder="관리자 아이디를 입력하세요" value="master"></li>
+                <li><input type="password" class="input_text1" name="ad_pw" placeholder="관리자 패스워드를 입력하세요" value="shop_master123"></li>
                 </ul>
                 </div>
                 <div class="right_div">

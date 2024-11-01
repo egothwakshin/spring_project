@@ -72,7 +72,7 @@ function go_notice(id){
 	if(id=="null" || id==null || id==""){
 		alert('접근권한이 없습니다.');		
 	}else{
-		location.href = "/notice_list";
+		location.href = "/noticeList";
 	}
 }
 

@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop_source">
 
+<!-- 공지사항 등록 -->
+<insert id="insertNotice">
+	INSERT INTO notice (title, content, writer, attachment, created_at)
+	VALUES (#{title}, #{content}, #{writer}, #{attachment}, now())
+</insert>
+
+<!-- 공지사항 리스트 조회 -->
+<select id="selectNoticeList" resultType="noticeDao">
+	SELECT id, title, writer, created_at AS createdAt, views
+	FROM notice
+	ORDER BY created_at DESC
+</select>
+
+<!-- 공지사항 상세 조회 -->
+<select id="selectNoticeById" parameterType="int" resultType="noticeDao">
+	SELECT id, title, content, writer, created_at, views, attachment
+	FROM notice
+	WHERE id = #{id}
+</select>
 
 
 <delete id="product_delete">
@@ -13,8 +32,8 @@
 </delete>
 
 
-<select id="privacyPolicy_select" resultType="privacyPolicy_dao">
-select p_content from privacy_policy order by pidx desc
+<select id="privacyPolicy_select" resultType="string">
+select p_content from privacy_policy order by pidx desc LIMIT 1;
 </select>
 
 <insert id="privacyPolicy_insert">
@@ -22,8 +41,8 @@ insert into privacy_policy values('0',#{p_content},now())
 </insert>
 
 
-<select id="terms_select" resultType="terms_dao">
-select t_content from terms order by tidx desc
+<select id="terms_select" resultType="string">
+    SELECT t_content FROM terms ORDER BY tidx DESC LIMIT 1;
 </select>
 
 <insert id="terms_insert">

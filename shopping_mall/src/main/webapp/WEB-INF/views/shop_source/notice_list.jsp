@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,17 +32,29 @@
         <li>날짜</li>
         <li>조회</li>
     </ul>
-    <ol>
-        <li><input type="checkbox"></li>
-        <li>1</li>
-        <li>테스트 제목</li>
-        <li>관리자</li>
-        <li>2024-08-17</li>
-        <li>100</li>
-    </ol>
-    <ol class="none_text">
-        <li>등록된 공지 내용이 없습니다.</li>
-    </ol>
+    <!-- 공지사항 리스트 출력 -->
+    <c:choose>
+    	<c:when test="${not empty noticeList}">
+	    	<c:forEach var="notice" items="${noticeList}" varStatus="status">
+			    <ol>
+			        <li><input type="checkbox"></li>
+			        <li>${status.index + 1}</li>
+			        <li><a href="/noticeView?id=${notice.id}">${notice.title}</a></li>
+			        <li>${notice.writer}</li>
+			        <li><fmt:formatDate value="${notice.createdAt}" pattern="yyyy-MM-dd" /></li>
+			        <li>${notice.views}</li>
+			    </ol>
+		    </c:forEach>
+	    <ol class="none_text">
+	        <li>등록된 공지 내용이 없습니다.</li>
+	    </ol>
+	    </c:when>
+	    <c:otherwise>
+	        <ol class="none_text">
+	        	<li>등록된 공지 내용이 없습니다.</li>
+	        </ol>
+        </c:otherwise>
+    </c:choose>
     </div>
     <div class="board_btn">
         <button class="border_del">공지삭제</button>
